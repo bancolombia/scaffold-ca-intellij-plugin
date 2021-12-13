@@ -4,6 +4,7 @@ import co.com.bancolombia.extensions.runCommand
 import co.com.bancolombia.utils.Language
 import co.com.bancolombia.utils.ProjectCoverage
 import co.com.bancolombia.utils.ProjectType
+import co.com.bancolombia.utils.label
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
@@ -38,13 +39,7 @@ class CreateStructureDialog(
         title = "Generate Structure"
     }
 
-    private fun label(textLabel: String): JComponent {
-        val label = JBLabel(textLabel)
-        label.componentStyle = UIUtil.ComponentStyle.SMALL
-        label.fontColor = UIUtil.FontColor.BRIGHTER
-        label.border = JBUI.Borders.empty(0, 5, 2, 0)
-        return label
-    }
+
 
     override fun doOKAction() {
         val language = this.language.selectedItem.toString()
@@ -55,7 +50,7 @@ class CreateStructureDialog(
         val coverage = projectCoverage.selectedItem.toString()
         val lombok = this.lombok.isSelected.toString()
         val command =
-            "./gradlew ca --package=$packageName --type=$type --name=$name --coverage=$coverage --lombok=$lombok --language=$language"
+            "ca --package=$packageName --type=$type --name=$name --coverage=$coverage --lombok=$lombok --language=$language"
         command.runCommand(this.project)
         super.doOKAction()
     }
