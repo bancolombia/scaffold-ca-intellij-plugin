@@ -1,7 +1,7 @@
-package com.github.jakspok.scaffoldcaintellijplugin.services
+package co.com.bancolombia.scaffoldcaintellijplugin.services
 
 import com.intellij.openapi.project.Project
-import com.github.jakspok.scaffoldcaintellijplugin.MyBundle
+import co.com.bancolombia.scaffoldcaintellijplugin.MyBundle
 
 class MyProjectService(project: Project) {
 

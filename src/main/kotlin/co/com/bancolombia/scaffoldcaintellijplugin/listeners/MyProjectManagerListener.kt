@@ -1,9 +1,9 @@
-package com.github.jakspok.scaffoldcaintellijplugin.listeners
+package co.com.bancolombia.scaffoldcaintellijplugin.listeners
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManagerListener
-import com.github.jakspok.scaffoldcaintellijplugin.services.MyProjectService
+import co.com.bancolombia.scaffoldcaintellijplugin.services.MyProjectService
 
 internal class MyProjectManagerListener : ProjectManagerListener {
 

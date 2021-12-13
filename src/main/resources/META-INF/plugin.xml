@@ -1,18 +1,31 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.jakspok.scaffoldcaintellijplugin</id>
+    <id>co.com.bancolombia.scaffoldcaintellijplugin</id>
     <name>scaffold-ca-intellij-plugin</name>
-    <vendor>jakspok</vendor>
+    <vendor>bancolombia</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.jakspok.scaffoldcaintellijplugin.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.jakspok.scaffoldcaintellijplugin.services.MyProjectService"/>
+        <applicationService serviceImplementation="co.com.bancolombia.scaffoldcaintellijplugin.services.MyApplicationService"/>
+        <projectService serviceImplementation="co.com.bancolombia.scaffoldcaintellijplugin.services.MyProjectService"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.jakspok.scaffoldcaintellijplugin.listeners.MyProjectManagerListener"
+        <listener class="co.com.bancolombia.scaffoldcaintellijplugin.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="scaffold-clean-architecture-id" text="Scaffold Clean Architecture" description="Plugin Clean Architecture">
+            <add-to-group group-id="MainMenu" anchor="last" />
+            <action class="co.com.bancolombia.actions.CreateStructureAction" id="myAction" text="Generate Structure"/>
+
+            <!--            <add-to-group group-id="MainMenu" anchor="last" />
+                        <action class="co.com.bancolombia.MainAction" id="myAction2" text="Generate Model"/>-->
+
+
+        </group>
+    </actions>
 </idea-plugin>

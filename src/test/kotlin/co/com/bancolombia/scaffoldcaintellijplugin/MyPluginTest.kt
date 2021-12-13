@@ -1,4 +1,4 @@
-package com.github.jakspok.scaffoldcaintellijplugin
+package co.com.bancolombia.scaffoldcaintellijplugin
 
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.psi.xml.XmlFile

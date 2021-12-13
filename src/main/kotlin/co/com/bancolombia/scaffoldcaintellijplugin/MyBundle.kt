@@ -1,4 +1,4 @@
-package com.github.jakspok.scaffoldcaintellijplugin
+package co.com.bancolombia.scaffoldcaintellijplugin
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
