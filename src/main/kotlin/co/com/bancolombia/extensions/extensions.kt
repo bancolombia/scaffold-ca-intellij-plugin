@@ -6,7 +6,7 @@ import com.intellij.openapi.util.SystemInfo
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-fun String.soCommand() = if(SystemInfo.isWindows) "cmd /c $this" else this
+fun String.soCommand() = if(SystemInfo.isWindows) "cmd /c gradlew.bat $this" else "./gradlew $this"
 
 fun String.runCommand(project: Project) {
     println(project.basePath.toString())
