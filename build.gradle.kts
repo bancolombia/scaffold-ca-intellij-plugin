@@ -49,6 +49,7 @@ qodana {
     autoUpdate.set(true)
 }*/
 
+
 tasks {
     // Set the JVM compatibility versions
     properties("javaVersion").let {

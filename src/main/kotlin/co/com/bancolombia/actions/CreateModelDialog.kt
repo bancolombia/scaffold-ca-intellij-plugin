@@ -13,15 +13,15 @@ import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.JTextField
 
-class CreateUseCaseDialog(private val project: Project) : DialogWrapper(true) {
+class CreateModelDialog(private val project: Project) : DialogWrapper(true) {
 
 
     private val panel = JPanel(GridBagLayout())
-    private val useCaseName = JTextField("useCaseName")
+    private val useCaseName = JTextField("modelName")
 
     init {
         init()
-        title = "Generate Use Case"
+        title = "Generate Model"
         panel.preferredSize = Dimension(300, 100)
     }
 
@@ -34,7 +34,7 @@ class CreateUseCaseDialog(private val project: Project) : DialogWrapper(true) {
 
     override fun doOKAction() {
         val name = this.useCaseName.text
-        CommandExecutor(this.project).generateUseCase(name)
+        CommandExecutor(this.project).generateModel(name)
         super.doOKAction()
     }
 }

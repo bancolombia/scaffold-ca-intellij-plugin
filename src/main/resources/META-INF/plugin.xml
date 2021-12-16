@@ -7,7 +7,8 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="co.com.bancolombia.scaffoldcaintellijplugin.services.MyApplicationService"/>
+        <applicationService
+                serviceImplementation="co.com.bancolombia.scaffoldcaintellijplugin.services.MyApplicationService"/>
         <projectService serviceImplementation="co.com.bancolombia.scaffoldcaintellijplugin.services.MyProjectService"/>
     </extensions>
 
@@ -18,12 +19,19 @@
 
     <actions>
         <!-- Add your actions here -->
-        <group id="scaffold-clean-architecture-id" text="Scaffold Clean Architecture" description="Plugin Clean Architecture">
-            <add-to-group group-id="MainMenu" anchor="last" />
-            <action class="co.com.bancolombia.actions.CreateStructureAction" id="myAction" text="Generate Structure"/>
+        <group id="scaffold-clean-architecture-id" text="Scaffold Clean Architecture"
+               description="Plugin Clean Architecture">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="co.com.bancolombia.actions.CreateStructureAction" id="ca" text="Generate Structure"/>
 
-            <!--            <add-to-group group-id="MainMenu" anchor="last" />
-                        <action class="co.com.bancolombia.MainAction" id="myAction2" text="Generate Model"/>-->
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="co.com.bancolombia.actions.CreateUseCaseAction" id="guc" text="Generate Use Case"/>
+
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="co.com.bancolombia.actions.CreateModelAction" id="gm" text="Generate Model"/>
+
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="co.com.bancolombia.actions.CreateEntryPointAction" id="gep" text="Generate Entry Point"/>
 
 
         </group>

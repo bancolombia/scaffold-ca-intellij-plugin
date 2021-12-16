@@ -14,3 +14,44 @@ enum class ProjectCoverage {
     JACOCO,
     COVERAGE
 }
+
+enum class ServerOptions {
+    UNDERTOW,
+    TOMCAT,
+    JETTY
+}
+
+enum class GraphQLOptions {
+    PATH,
+    GRAPHQL
+}
+
+enum class EntryPoints {
+    NONE,
+    GENERIC,
+    RESTMVC,
+    WEBFLUX,
+    RSOCKET,
+    GRAPHQL,
+    ASYNCEVENTHANDLER,
+    MQ
+}
+
+enum class DriverAdapters {
+    GENERIC,
+    JPA,
+    MONGODB,
+    ASYNCEVENTBUS,
+    RESTCONSUMER,
+    REDIS,
+    RSOCKET,
+    R2DBC,
+    KMS,
+    SECRETS,
+    S3,
+    MQ
+}
+
+
+
+
