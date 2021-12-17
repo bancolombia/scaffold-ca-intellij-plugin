@@ -14,36 +14,36 @@ import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.JTextField
 
-class CreateModelDialog(private val project: Project) : DialogWrapper(true) {
+class DeleteModuleDialog(private val project: Project) : DialogWrapper(true) {
 
 
     private val panel = JPanel(GridBagLayout())
-    private val useCaseName = JTextField("modelName")
+    private val deleteModuleName = JTextField("moduleName")
 
     init {
         init()
-        title = "Generate Model"
+        title = "Delete Module"
         panel.preferredSize = Dimension(300, 100)
     }
 
     override fun createCenterPanel(): JComponent {
         val gridBag = initGridBag()
         panel.add(label("Name"), gridBag.customNextLine())
-        panel.add(useCaseName, gridBag.customTab())
+        panel.add(deleteModuleName, gridBag.customTab())
         return panel
     }
 
-    override fun doValidate(): ValidationInfo? {
-        val selected = this.useCaseName.text
-        if (selected.isNullOrEmpty()) {
-            return ValidationInfo("Please enter a name for model", useCaseName)
+    override fun doValidate() : ValidationInfo? {
+        val selected = this.deleteModuleName.text
+        if (selected.isNullOrEmpty()){
+            return ValidationInfo("Please enter name of module to delete",deleteModuleName)
         }
         return null
     }
 
     override fun doOKAction() {
-        val name = this.useCaseName.text
-        CommandExecutor(this.project).generateModel(name)
+        val name = this.deleteModuleName.text
+        CommandExecutor(this.project).deleteModule(name)
         super.doOKAction()
     }
 }

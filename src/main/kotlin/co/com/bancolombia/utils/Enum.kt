@@ -38,6 +38,7 @@ enum class EntryPoints {
 }
 
 enum class DriverAdapters {
+    NONE,
     GENERIC,
     JPA,
     MONGODB,
@@ -51,6 +52,17 @@ enum class DriverAdapters {
     S3,
     MQ
 }
+
+enum class ModeOptions {
+    TEMPLATE,
+    REPOSITORY
+}
+
+enum class PipelineOptions {
+    AZURE,
+    GITHUB
+}
+
 
 
 

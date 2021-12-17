@@ -28,41 +28,39 @@ class CommandExecutor(
 
     fun generateUseCase(name: String): Unit {
         val command =
-            "guc  --name=$name"
+            "guc --name=$name"
         command.runCommand(this.project)
     }
 
     fun generateEntryPoint(type :EntryPoints, options :Map<String, String>): Unit {
         val command =
-            "gep  --type=${type.name.toLowerCase()} ${options.joinOptions()}"
+            "gep --type=${type.name.toLowerCase()} ${options.joinOptions()}"
        command.runCommand(this.project)
     }
 
     fun generateDriverAdapter(type :DriverAdapters, options :Map<String, String>): Unit {
         val command =
-            "gda  --type=${type.name.toLowerCase()} ${options.joinOptions()}"
+            "gda --type=${type.name.toLowerCase()} ${options.joinOptions()}"
         command.runCommand(this.project)
     }
 
     fun generatePipeline(type: String): Unit {
         val command =
-            "gpl  --type=$type"
+            "gpl --type=$type"
         command.runCommand(this.project)
     }
 
     fun generateHelper(name: String): Unit {
         val command =
-            "gh  --name=$name"
+            "gh --name=$name"
         command.runCommand(this.project)
     }
 
-    fun generateDelete(name: String): Unit {
+    fun deleteModule(name: String): Unit {
         val command =
-            "dm  --module=$name"
+            "dm --module=$name"
         command.runCommand(this.project)
     }
-
-    fun generateUpdateDependencies(map: Map<String, String>): Unit {}
 
     private fun writeBuildGradleFile(language: String) {
         var filename = "build.gradle"

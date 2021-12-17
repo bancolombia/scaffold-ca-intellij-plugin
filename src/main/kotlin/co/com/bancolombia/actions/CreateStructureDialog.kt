@@ -7,6 +7,7 @@ import co.com.bancolombia.utils.*
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.util.castSafelyTo
 import java.awt.Dimension
 import java.awt.GridBagLayout
@@ -50,6 +51,17 @@ class CreateStructureDialog(
         )
 
         super.doOKAction()
+    }
+
+    override fun doValidate(): ValidationInfo? {
+
+        if (projectName.text.isNullOrEmpty()) {
+            return ValidationInfo("Please enter a name for project", projectName)
+        }
+        if (projectPackage.text.isNullOrEmpty()) {
+            return ValidationInfo("Please enter a name for package", projectPackage)
+        }
+        return null
     }
 
     override fun createCenterPanel(): JComponent {

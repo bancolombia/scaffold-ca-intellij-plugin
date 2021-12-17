@@ -7,6 +7,7 @@ import co.com.bancolombia.utils.*
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.util.castSafelyTo
 import java.awt.Dimension
 import java.awt.GridBagLayout
@@ -41,9 +42,29 @@ class CreateEntryPointDialog(
         if (graphQL.isEnabled) {
             options["pathgql"] = graphQL.text
         }
+        if (name.isEnabled) {
+            options["name"] = name.text
+        }
 
         CommandExecutor(this.project).generateEntryPoint(type, options)
         super.doOKAction()
+    }
+
+    override fun doValidate(): ValidationInfo? {
+        val selected = this.type.selectedItem.castSafelyTo<EntryPoints>()
+        if (selected == EntryPoints.NONE) {
+            return ValidationInfo("Please make a selection", type)
+        }
+        if (selected == EntryPoints.GENERIC && name.text.isNullOrEmpty()) {
+            return ValidationInfo("The field can't be empty", name)
+        }
+        if (selected == EntryPoints.WEBFLUX && router.text.isNullOrEmpty()) {
+            return ValidationInfo("The field can't be empty", router)
+        }
+        if (selected == EntryPoints.GRAPHQL && graphQL.text.isNullOrEmpty()) {
+            return ValidationInfo("The field can't be empty", graphQL)
+        }
+        return null
     }
 
     override fun createCenterPanel(): JComponent {
