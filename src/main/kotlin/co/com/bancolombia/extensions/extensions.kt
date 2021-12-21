@@ -31,12 +31,17 @@ fun String.runCommand(project: Project): String{
     while (reader.readLine().also { line = it } != null) {
         consoleOutput.append(line).append("\n")
     }
-    if (!process.waitFor(30, TimeUnit.SECONDS)) {
-        process.destroy()
-        throw RuntimeException("execution timed out: $this")
+    try {
+        if (!process.waitFor(30, TimeUnit.SECONDS)) {
+            process.destroy()
+            consoleOutput.append("execution timed out: $this")
+        }
+    }catch (e : InterruptedException){
+        consoleOutput.append("the process was interrupted: $this \n cause: ${e.message}")
     }
+
     if (process.exitValue() != 0) {
-        throw RuntimeException("execution failed with code ${process.exitValue()}: $this")
+        consoleOutput.append("execution failed with code ${process.exitValue()}: $this")
     }
     return consoleOutput.toString()
 }
