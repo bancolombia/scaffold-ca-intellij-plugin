@@ -1,6 +1,9 @@
 package co.com.bancolombia.actions
 
-import co.com.bancolombia.extensions.*
+import co.com.bancolombia.extensions.addLine
+import co.com.bancolombia.extensions.disabledComponent
+import co.com.bancolombia.extensions.enabledComponent
+import co.com.bancolombia.extensions.initGridBag
 import co.com.bancolombia.utils.CommandExecutor
 import co.com.bancolombia.utils.EntryPoints
 import co.com.bancolombia.utils.ServerOptions
@@ -8,6 +11,7 @@ import co.com.bancolombia.utils.label
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.util.castSafelyTo
 import java.awt.Dimension
@@ -47,14 +51,17 @@ class CreateEntryPointDialog(
         if (name.isEnabled) {
             options["name"] = name.text
         }
-        if(router.isEnabled){
+        if (router.isEnabled) {
             options["router"] = router.isSelected.toString()
         }
 
         try {
             super.doOKAction()
         } finally {
-            OutputDialog(CommandExecutor(this.project).generateEntryPoint(type, options)).show()
+            Messages.showInfoMessage(
+                CommandExecutor(this.project).generateEntryPoint(type, options),
+                "Console Output"
+            )
         }
     }
 
@@ -64,13 +71,13 @@ class CreateEntryPointDialog(
             return ValidationInfo("Please make a selection", type)
         }
         if (selected == EntryPoints.GENERIC && name.text.isNullOrEmpty()) {
-            return ValidationInfo("The field can't be empty", name)
+            return ValidationInfo(EMPTY_FIELD_MESSAGE, name)
         }
         if (selected == EntryPoints.WEBFLUX && router.text.isNullOrEmpty()) {
-            return ValidationInfo("The field can't be empty", router)
+            return ValidationInfo(EMPTY_FIELD_MESSAGE, router)
         }
         if (selected == EntryPoints.GRAPHQL && graphQL.text.isNullOrEmpty()) {
-            return ValidationInfo("The field can't be empty", graphQL)
+            return ValidationInfo(EMPTY_FIELD_MESSAGE, graphQL)
         }
         return null
     }
@@ -89,13 +96,12 @@ class CreateEntryPointDialog(
                 server.selectedItem.castSafelyTo<ServerOptions>() ?: ServerOptions.UNDERTOW
             options["server"] = selectedServer.name.toLowerCase()
         }
-        return panel.addLine(label("Entry Point"),type,grid)
-            .addLine(nameLabel,name,grid)
-            .addLine(serverLabel,server,grid)
-            .addLine("",router,grid)
-            .addLine(graphQLabel,graphQL,grid)
+        return panel.addLine(label("Entry Point"), type, grid)
+            .addLine(nameLabel, name, grid)
+            .addLine(serverLabel, server, grid)
+            .addLine("", router, grid)
+            .addLine(graphQLabel, graphQL, grid)
     }
-
 
 
     private fun disabledComponents() {
@@ -123,5 +129,9 @@ class CreateEntryPointDialog(
             graphQLabel.enabledComponent()
         }
         else -> null
+    }
+
+    companion object {
+        const val EMPTY_FIELD_MESSAGE = "The field can't be empty"
     }
 }
