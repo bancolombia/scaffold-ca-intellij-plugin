@@ -19,30 +19,16 @@
 
     <actions>
         <!-- Add your actions here -->
-        <group id="scaffold-clean-architecture-id" text="Scaffold Clean Architecture"
+        <group id="scaffold-clean-architecture-menu" text="Scaffold Clean Architecture"
                description="Plugin clean architecture">
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="co.com.bancolombia.actions.CreateStructureAction" id="ca" text="Generate Structure"/>
-
-            <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="co.com.bancolombia.actions.CreateUseCaseAction" id="guc" text="Generate Use Case"/>
-
-            <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="co.com.bancolombia.actions.CreateModelAction" id="gm" text="Generate Model"/>
-
-            <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="co.com.bancolombia.actions.CreateEntryPointAction" id="gep" text="Generate Entry Points"/>
-
-            <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="co.com.bancolombia.actions.CreateDriverAdaptersAction" id="gda" text="Generate Driver Adapters"/>
-
-            <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="co.com.bancolombia.actions.CreateHelperAction" id="gh" text="Generate Helper"/>
-
-            <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="co.com.bancolombia.actions.DeleteModuleAction" id="dm" text="Delete Module"/>
-
-            <add-to-group group-id="MainMenu" anchor="last"/>
             <action class="co.com.bancolombia.actions.CreatePipelineAction" id="gpl" text="Generate Pipeline"/>
 
         </group>
