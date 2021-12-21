@@ -1,15 +1,11 @@
 package co.com.bancolombia.actions
 
-import co.com.bancolombia.extensions.customNextLine
-import co.com.bancolombia.extensions.customTab
+import co.com.bancolombia.extensions.addLine
 import co.com.bancolombia.extensions.initGridBag
 import co.com.bancolombia.utils.CommandExecutor
-import co.com.bancolombia.utils.EntryPoints
-import co.com.bancolombia.utils.label
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ValidationInfo
-import com.intellij.util.castSafelyTo
 import java.awt.Dimension
 import java.awt.GridBagLayout
 import javax.swing.JComponent
@@ -17,7 +13,6 @@ import javax.swing.JPanel
 import javax.swing.JTextField
 
 class CreateHelperDialog(private val project: Project) : DialogWrapper(true) {
-
 
     private val panel = JPanel(GridBagLayout())
     private val helperName = JTextField("helperName")
@@ -29,10 +24,7 @@ class CreateHelperDialog(private val project: Project) : DialogWrapper(true) {
     }
 
     override fun createCenterPanel(): JComponent {
-        val gridBag = initGridBag()
-        panel.add(label("Name"), gridBag.customNextLine())
-        panel.add(helperName, gridBag.customTab())
-        return panel
+        return panel.addLine("Name", helperName, initGridBag())
     }
 
     override fun doValidate(): ValidationInfo? {
@@ -44,8 +36,10 @@ class CreateHelperDialog(private val project: Project) : DialogWrapper(true) {
     }
 
     override fun doOKAction() {
-        val name = this.helperName.text
-        CommandExecutor(this.project).generateHelper(name)
-        super.doOKAction()
+        try {
+            super.doOKAction()
+        } finally {
+            OutputDialog(CommandExecutor(this.project).generateHelper(this.helperName.text)).show()
+        }
     }
 }

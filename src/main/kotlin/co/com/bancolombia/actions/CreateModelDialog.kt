@@ -1,10 +1,8 @@
 package co.com.bancolombia.actions
 
-import co.com.bancolombia.extensions.customNextLine
-import co.com.bancolombia.extensions.customTab
+import co.com.bancolombia.extensions.addLine
 import co.com.bancolombia.extensions.initGridBag
 import co.com.bancolombia.utils.CommandExecutor
-import co.com.bancolombia.utils.label
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ValidationInfo
@@ -27,10 +25,7 @@ class CreateModelDialog(private val project: Project) : DialogWrapper(true) {
     }
 
     override fun createCenterPanel(): JComponent {
-        val gridBag = initGridBag()
-        panel.add(label("Name"), gridBag.customNextLine())
-        panel.add(useCaseName, gridBag.customTab())
-        return panel
+        return panel.addLine("Name", useCaseName, initGridBag())
     }
 
     override fun doValidate(): ValidationInfo? {
@@ -42,8 +37,10 @@ class CreateModelDialog(private val project: Project) : DialogWrapper(true) {
     }
 
     override fun doOKAction() {
-        val name = this.useCaseName.text
-        CommandExecutor(this.project).generateModel(name)
-        super.doOKAction()
+        try {
+            super.doOKAction()
+        } finally {
+            OutputDialog(CommandExecutor(this.project).generateModel(this.useCaseName.text)).show()
+        }
     }
 }

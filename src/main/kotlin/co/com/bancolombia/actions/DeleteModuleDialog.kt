@@ -1,10 +1,8 @@
 package co.com.bancolombia.actions
 
-import co.com.bancolombia.extensions.customNextLine
-import co.com.bancolombia.extensions.customTab
+import co.com.bancolombia.extensions.addLine
 import co.com.bancolombia.extensions.initGridBag
 import co.com.bancolombia.utils.CommandExecutor
-import co.com.bancolombia.utils.label
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ValidationInfo
@@ -27,23 +25,22 @@ class DeleteModuleDialog(private val project: Project) : DialogWrapper(true) {
     }
 
     override fun createCenterPanel(): JComponent {
-        val gridBag = initGridBag()
-        panel.add(label("Name"), gridBag.customNextLine())
-        panel.add(deleteModuleName, gridBag.customTab())
-        return panel
+        return panel.addLine("Name", deleteModuleName, initGridBag())
     }
 
-    override fun doValidate() : ValidationInfo? {
+    override fun doValidate(): ValidationInfo? {
         val selected = this.deleteModuleName.text
-        if (selected.isNullOrEmpty()){
-            return ValidationInfo("Please enter name of module to delete",deleteModuleName)
+        if (selected.isNullOrEmpty()) {
+            return ValidationInfo("Please enter name of module to delete", deleteModuleName)
         }
         return null
     }
 
     override fun doOKAction() {
-        val name = this.deleteModuleName.text
-        CommandExecutor(this.project).deleteModule(name)
-        super.doOKAction()
+        try {
+            super.doOKAction()
+        } finally {
+            OutputDialog(CommandExecutor(this.project).deleteModule(this.deleteModuleName.text)).show()
+        }
     }
 }

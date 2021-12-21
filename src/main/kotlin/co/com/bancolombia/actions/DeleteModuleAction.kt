@@ -7,7 +7,6 @@ class DeleteModuleAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         if (e.project == null) return
-        val dialog = DeleteModuleDialog(e.project!!)
-        dialog.showAndGet()
+        DeleteModuleDialog(e.project!!).show()
     }
 }

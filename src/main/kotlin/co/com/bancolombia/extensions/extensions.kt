@@ -1,34 +1,44 @@
 package co.com.bancolombia.extensions
 
-
+import co.com.bancolombia.utils.label
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.SystemInfo
+import com.intellij.ui.components.JBLabel
 import com.intellij.uiDesigner.core.AbstractLayout
 import com.intellij.util.ui.GridBag
 import java.awt.GridBagConstraints
 import java.awt.Insets
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
+import javax.swing.JComponent
+import javax.swing.JPanel
+
 
 fun String.soCommand() = if(SystemInfo.isWindows) "cmd /c gradlew.bat $this" else "./gradlew $this"
 
-fun String.runCommand(project: Project) {
-    println(project.basePath.toString())
-    println("execute : $this")
-
+fun String.runCommand(project: Project): String{
     val workingDir = File(project.basePath.toString())
     val process = ProcessBuilder(*soCommand().split(" ").toTypedArray())
         .directory(workingDir)
-        .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-        .redirectError(ProcessBuilder.Redirect.INHERIT)
+        .redirectOutput(ProcessBuilder.Redirect.PIPE)
+        .redirectError(ProcessBuilder.Redirect.PIPE)
         .start()
-    if (!process.waitFor(10, TimeUnit.SECONDS)) {
+    val reader = BufferedReader(InputStreamReader(process.inputStream))
+    val consoleOutput = StringBuilder("$this \n")
+    var line: String?
+    while (reader.readLine().also { line = it } != null) {
+        consoleOutput.append(line).append("\n")
+    }
+    if (!process.waitFor(30, TimeUnit.SECONDS)) {
         process.destroy()
         throw RuntimeException("execution timed out: $this")
     }
     if (process.exitValue() != 0) {
         throw RuntimeException("execution failed with code ${process.exitValue()}: $this")
     }
+    return consoleOutput.toString()
 }
 
 fun Map<String,String>.joinOptions() : String = this.map { (key,value) ->  "--$key=$value" }
@@ -46,3 +56,24 @@ fun initGridBag() = GridBag().setDefaultInsets(
         AbstractLayout.DEFAULT_HGAP
     )
 ) .setDefaultWeightX(1.0).setDefaultFill(GridBagConstraints.HORIZONTAL)
+
+fun JComponent.enabledComponent(){
+    this.isEnabled=true
+    this.isVisible=true
+}
+
+fun JComponent.disabledComponent(){
+    this.isEnabled=false
+    this.isVisible=false
+}
+
+fun JPanel.addLine(label : JBLabel, component:JComponent, grid:GridBag):JPanel{
+    this.add(label, grid.customNextLine())
+    this.add(component, grid.customTab())
+    return this
+}
+fun JPanel.addLine(label : String, component:JComponent, grid:GridBag):JPanel{
+    this.add(label(label), grid.customNextLine())
+    this.add(component, grid.customTab())
+    return this
+}

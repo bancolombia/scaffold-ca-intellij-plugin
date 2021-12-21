@@ -1,9 +1,11 @@
 package co.com.bancolombia.actions
 
-import co.com.bancolombia.extensions.customNextLine
-import co.com.bancolombia.extensions.customTab
+import co.com.bancolombia.extensions.addLine
 import co.com.bancolombia.extensions.initGridBag
-import co.com.bancolombia.utils.*
+import co.com.bancolombia.utils.CommandExecutor
+import co.com.bancolombia.utils.Language
+import co.com.bancolombia.utils.ProjectCoverage
+import co.com.bancolombia.utils.ProjectType
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
@@ -40,17 +42,25 @@ class CreateStructureDialog(
         val packageName = this.projectPackage.text
         val type = this.projectType.selectedItem.castSafelyTo<ProjectType>()?.name ?: "IMPERATIVE"
         val name = this.projectName.text
-        val coverage = projectCoverage.selectedItem.castSafelyTo<ProjectCoverage>()?.name ?: "JACOCO"
+        val coverage =
+            projectCoverage.selectedItem.castSafelyTo<ProjectCoverage>()?.name ?: "JACOCO"
         val lombok = this.lombok.isSelected.toString()
-
-        CommandExecutor(this.project).generateStructure(
-            mapOf(
-                "language" to language,
-                "package" to packageName, "type" to type, "name" to name, "coverage" to coverage, "lombok" to lombok
-            )
-        )
-
-        super.doOKAction()
+        try {
+            super.doOKAction()
+        } finally {
+            OutputDialog(
+                CommandExecutor(this.project).generateStructure(
+                    mapOf(
+                        "language" to language,
+                        "package" to packageName,
+                        "type" to type,
+                        "name" to name,
+                        "coverage" to coverage,
+                        "lombok" to lombok
+                    )
+                )
+            ).show()
+        }
     }
 
     override fun doValidate(): ValidationInfo? {
@@ -67,18 +77,11 @@ class CreateStructureDialog(
     override fun createCenterPanel(): JComponent {
 
         val gridBag = initGridBag()
-        panel.add(label("Name"), gridBag.customNextLine())
-        panel.add(projectName, gridBag.customTab())
-        panel.add(label("Package"), gridBag.customNextLine())
-        panel.add(projectPackage, gridBag.customTab())
-        panel.add(label("Type"), gridBag.customNextLine())
-        panel.add(projectType, gridBag.customTab())
-        panel.add(label("Language"), gridBag.customNextLine())
-        panel.add(language, gridBag.customTab())
-        panel.add(label("Coverage"), gridBag.customNextLine())
-        panel.add(projectCoverage, gridBag.customTab())
-        panel.add(label(""), gridBag.customNextLine())
-        panel.add(lombok, gridBag.customTab())
-        return panel
+        return panel.addLine("Name", projectName, gridBag)
+            .addLine("Package", projectPackage, gridBag)
+            .addLine("Type", projectType, gridBag)
+            .addLine("Language", language, gridBag)
+            .addLine("Coverage", projectCoverage, gridBag)
+            .addLine("", lombok, gridBag)
     }
 }

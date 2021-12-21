@@ -1,7 +1,8 @@
 package co.com.bancolombia.actions
 
-import co.com.bancolombia.extensions.customNextLine
-import co.com.bancolombia.extensions.customTab
+import co.com.bancolombia.extensions.addLine
+import co.com.bancolombia.extensions.disabledComponent
+import co.com.bancolombia.extensions.enabledComponent
 import co.com.bancolombia.extensions.initGridBag
 import co.com.bancolombia.utils.CommandExecutor
 import co.com.bancolombia.utils.DriverAdapters
@@ -28,15 +29,18 @@ class CreateDriverAdaptersDialog(
     private val type = ComboBox(DriverAdapters.values())
     private val name = JTextField()
     private val secret = JCheckBox("secret", true)
-    private val url = JTextField("http://example.com")
+    private val url = JTextField("https://example.com")
     private val mode = ComboBox(ModeOptions.values())
     private val options = mutableMapOf<String, String>()
+    private val nameLabel = label("Name")
+    private val urlLabel = label("URL")
+    private val modeLabel = label("Mode")
+
 
     init {
         init()
         title = "Generate Driver Adapters"
-        panel.preferredSize = Dimension(300, 250)
-
+        panel.preferredSize = Dimension(300, 100)
     }
 
     override fun doOKAction() {
@@ -47,43 +51,44 @@ class CreateDriverAdaptersDialog(
         if (url.isEnabled) {
             options["url"] = url.text
         }
-        CommandExecutor(this.project).generateDriverAdapter(type, options)
-        super.doOKAction()
+        if (secret.isEnabled) {
+            options["secret"] = secret.isSelected.toString()
+        }
+        try {
+            super.doOKAction()
+        } finally {
+            OutputDialog(
+                CommandExecutor(this.project).generateDriverAdapter(type, options)
+            ).show()
+        }
     }
 
-    override fun doValidate() :ValidationInfo? {
+    override fun doValidate(): ValidationInfo? {
         val selected = this.type.selectedItem.castSafelyTo<DriverAdapters>()
-        if (selected == DriverAdapters.NONE){
-            return ValidationInfo("Please make a selection",type)
+        if (selected == DriverAdapters.NONE) {
+            return ValidationInfo("Please make a selection", type)
         }
-        if (selected == DriverAdapters.GENERIC && name.text.isNullOrEmpty()){
-            return ValidationInfo("Please enter a name",name)
+        if (selected == DriverAdapters.GENERIC && name.text.isNullOrEmpty()) {
+            return ValidationInfo("Please enter a name", name)
         }
-        if (selected == DriverAdapters.RESTCONSUMER && url.text.isNullOrEmpty()){
-            return ValidationInfo("Please enter a name",url)
+        if (selected == DriverAdapters.RESTCONSUMER && url.text.isNullOrEmpty()) {
+            return ValidationInfo("Please enter a name", url)
         }
         return null
     }
 
     override fun createCenterPanel(): JComponent {
-
-        name.isEnabled = false
-        secret.isEnabled = false
-        url.isEnabled = false
-        mode.isEnabled = false
-
+        disableComponents()
         type.addActionListener {
-            val selectedType = type.selectedItem.castSafelyTo<DriverAdapters>() ?: DriverAdapters.NONE
-            name.isEnabled = false
-            secret.isEnabled = false
-            url.isEnabled = false
-            mode.isEnabled = false
+            val selectedType =
+                type.selectedItem.castSafelyTo<DriverAdapters>() ?: DriverAdapters.NONE
+            disableComponents()
             options.clear()
             enableFields(selectedType)
         }
         mode.addActionListener {
-            val selectedServer = mode.selectedItem.castSafelyTo<ModeOptions>() ?: ModeOptions.TEMPLATE
-            options["mode"] = selectedServer.name.toLowerCase()
+            val selectedMode = mode.selectedItem.castSafelyTo<ModeOptions>() ?: ModeOptions.TEMPLATE
+            options["mode"] = selectedMode.name.toLowerCase()
         }
         secret.addActionListener {
             val selectedType = secret.isSelected.toString()
@@ -91,29 +96,40 @@ class CreateDriverAdaptersDialog(
         }
 
         val gridBag = initGridBag()
-        panel.add(label("Type"), gridBag.customNextLine())
-        panel.add(type, gridBag.customTab())
-        panel.add(label("Name"), gridBag.customNextLine())
-        panel.add(name, gridBag.customTab())
-        panel.add(label("Url"), gridBag.customNextLine())
-        panel.add(url, gridBag.customTab())
-        panel.add(secret, gridBag.customNextLine())
-        panel.add(label("Mode"), gridBag.customNextLine())
-        panel.add(mode, gridBag.customTab())
 
-        return panel
+        return panel.addLine(label("Type"), type, gridBag)
+            .addLine(nameLabel, name, gridBag)
+            .addLine(urlLabel, url, gridBag)
+            .addLine("", secret, gridBag)
+            .addLine(modeLabel, mode, gridBag)
+    }
+
+    private fun disableComponents() {
+        name.disabledComponent()
+        nameLabel.disabledComponent()
+        secret.disabledComponent()
+        url.disabledComponent()
+        urlLabel.disabledComponent()
+        mode.disabledComponent()
+        modeLabel.disabledComponent()
     }
 
     private fun enableFields(type: DriverAdapters) = when (type) {
-        DriverAdapters.GENERIC -> name.isEnabled = true
-        DriverAdapters.JPA, DriverAdapters.MONGODB -> secret.isEnabled = true
-        DriverAdapters.RESTCONSUMER -> url.isEnabled = true
-        DriverAdapters.REDIS -> {
-            mode.isEnabled = true
-            secret.isEnabled = true
+        DriverAdapters.GENERIC -> {
+            name.enabledComponent()
+            nameLabel.enabledComponent()
         }
-        else -> {}
-
+        DriverAdapters.JPA, DriverAdapters.MONGODB -> secret.enabledComponent()
+        DriverAdapters.RESTCONSUMER -> {
+            url.enabledComponent()
+            urlLabel.enabledComponent()
+        }
+        DriverAdapters.REDIS -> {
+            mode.enabledComponent()
+            modeLabel.enabledComponent()
+            secret.enabledComponent()
+        }
+        else -> null
     }
 
 }

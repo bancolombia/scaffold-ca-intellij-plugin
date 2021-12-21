@@ -7,7 +7,6 @@ class CreateUseCaseAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         if (e.project == null) return
-        val dialog = CreateUseCaseDialog(e.project!!)
-        dialog.showAndGet()
+        CreateUseCaseDialog(e.project!!).show()
     }
 }

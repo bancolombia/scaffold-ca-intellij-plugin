@@ -5,7 +5,7 @@ import com.intellij.util.ui.JBUI
 import com.intellij.util.ui.UIUtil
 import javax.swing.JComponent
 
- fun label(textLabel: String): JComponent {
+ fun label(textLabel: String): JBLabel {
     val label = JBLabel(textLabel)
     label.componentStyle = UIUtil.ComponentStyle.SMALL
     label.fontColor = UIUtil.FontColor.BRIGHTER

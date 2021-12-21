@@ -1,9 +1,10 @@
 package co.com.bancolombia.actions
 
-import co.com.bancolombia.extensions.customNextLine
-import co.com.bancolombia.extensions.customTab
-import co.com.bancolombia.extensions.initGridBag
-import co.com.bancolombia.utils.*
+import co.com.bancolombia.extensions.*
+import co.com.bancolombia.utils.CommandExecutor
+import co.com.bancolombia.utils.EntryPoints
+import co.com.bancolombia.utils.ServerOptions
+import co.com.bancolombia.utils.label
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
@@ -11,7 +12,6 @@ import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.util.castSafelyTo
 import java.awt.Dimension
 import java.awt.GridBagLayout
-import java.awt.event.ActionListener
 import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JPanel
@@ -29,12 +29,14 @@ class CreateEntryPointDialog(
     private val router = JCheckBox("router", true)
     private val graphQL = JTextField("graphql")
     private val options = mutableMapOf<String, String>()
+    private val nameLabel = label("Name")
+    private val serverLabel = label("Server")
+    private val graphQLabel = label("Name")
 
     init {
         init()
         title = "Generate EntryPoint"
-        panel.preferredSize = Dimension(300, 250)
-
+        panel.preferredSize = Dimension(300, 100)
     }
 
     override fun doOKAction() {
@@ -45,9 +47,15 @@ class CreateEntryPointDialog(
         if (name.isEnabled) {
             options["name"] = name.text
         }
+        if(router.isEnabled){
+            options["router"] = router.isSelected.toString()
+        }
 
-        CommandExecutor(this.project).generateEntryPoint(type, options)
-        super.doOKAction()
+        try {
+            super.doOKAction()
+        } finally {
+            OutputDialog(CommandExecutor(this.project).generateEntryPoint(type, options)).show()
+        }
     }
 
     override fun doValidate(): ValidationInfo? {
@@ -68,50 +76,52 @@ class CreateEntryPointDialog(
     }
 
     override fun createCenterPanel(): JComponent {
-
-        name.isEnabled = false
-        server.isEnabled = false
-        router.isEnabled = false
-        graphQL.isEnabled = false
-
-        type.addActionListener(ActionListener {
+        val grid = initGridBag()
+        disabledComponents()
+        type.addActionListener {
             val selectedType = type.selectedItem.castSafelyTo<EntryPoints>() ?: EntryPoints.NONE
-            name.isEnabled = false
-            server.isEnabled = false
-            router.isEnabled = false
-            graphQL.isEnabled = false
+            disabledComponents()
             options.clear()
             enableFields(selectedType)
-        })
-        server.addActionListener(ActionListener {
-            val selectedServer = server.selectedItem.castSafelyTo<ServerOptions>() ?: ServerOptions.UNDERTOW
+        }
+        server.addActionListener {
+            val selectedServer =
+                server.selectedItem.castSafelyTo<ServerOptions>() ?: ServerOptions.UNDERTOW
             options["server"] = selectedServer.name.toLowerCase()
-        })
-        router.addActionListener(ActionListener {
-            val selectedType = router.isSelected.toString()
-            options["router"] = selectedType
-        })
+        }
+        return panel.addLine(label("Entry Point"),type,grid)
+            .addLine(nameLabel,name,grid)
+            .addLine(serverLabel,server,grid)
+            .addLine("",router,grid)
+            .addLine(graphQLabel,graphQL,grid)
+    }
 
-        val gridBag = initGridBag()
-        panel.add(label("Type"), gridBag.customNextLine())
-        panel.add(type, gridBag.customTab())
-        panel.add(label("Name"), gridBag.customNextLine())
-        panel.add(name, gridBag.customTab())
-        panel.add(label("Server"), gridBag.customNextLine())
-        panel.add(server, gridBag.customTab())
-        panel.add(router, gridBag.customNextLine())
-        panel.add(label("GraphQl"), gridBag.customNextLine())
-        panel.add(graphQL, gridBag.customTab())
 
-        return panel
+
+    private fun disabledComponents() {
+        name.disabledComponent()
+        nameLabel.disabledComponent()
+        server.disabledComponent()
+        serverLabel.disabledComponent()
+        router.disabledComponent()
+        graphQL.disabledComponent()
+        graphQLabel.disabledComponent()
     }
 
     private fun enableFields(type: EntryPoints) = when (type) {
-        EntryPoints.GENERIC -> name.isEnabled = true
-        EntryPoints.RESTMVC -> server.isEnabled = true
-        EntryPoints.WEBFLUX -> router.isEnabled = true
-        EntryPoints.GRAPHQL -> graphQL.isEnabled = true
-        else -> {}
+        EntryPoints.GENERIC -> {
+            name.enabledComponent()
+            nameLabel.enabledComponent()
+        }
+        EntryPoints.RESTMVC -> {
+            server.enabledComponent()
+            serverLabel.enabledComponent()
+        }
+        EntryPoints.WEBFLUX -> router.enabledComponent()
+        EntryPoints.GRAPHQL -> {
+            graphQL.enabledComponent()
+            graphQLabel.enabledComponent()
+        }
+        else -> null
     }
-
 }

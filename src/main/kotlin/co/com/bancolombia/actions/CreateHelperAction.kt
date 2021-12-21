@@ -7,7 +7,6 @@ class CreateHelperAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         if (e.project == null) return
-        val dialog = CreateHelperDialog(e.project!!)
-        dialog.showAndGet()
+        CreateHelperDialog(e.project!!).show()
     }
 }

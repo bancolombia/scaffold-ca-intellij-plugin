@@ -7,7 +7,6 @@ class CreatePipelineAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         if (e.project == null) return
-        val dialog = CreatePipelineDialog(e.project!!)
-        dialog.showAndGet()
+        CreatePipelineDialog(e.project!!).show()
     }
 }
