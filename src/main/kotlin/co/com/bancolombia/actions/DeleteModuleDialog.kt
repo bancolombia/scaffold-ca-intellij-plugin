@@ -5,6 +5,7 @@ import co.com.bancolombia.extensions.initGridBag
 import co.com.bancolombia.utils.CommandExecutor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.ui.ValidationInfo
 import java.awt.Dimension
 import java.awt.GridBagLayout
@@ -13,7 +14,6 @@ import javax.swing.JPanel
 import javax.swing.JTextField
 
 class DeleteModuleDialog(private val project: Project) : DialogWrapper(true) {
-
 
     private val panel = JPanel(GridBagLayout())
     private val deleteModuleName = JTextField("moduleName")
@@ -40,7 +40,10 @@ class DeleteModuleDialog(private val project: Project) : DialogWrapper(true) {
         try {
             super.doOKAction()
         } finally {
-            OutputDialog(CommandExecutor(this.project).deleteModule(this.deleteModuleName.text)).show()
+            Messages.showInfoMessage(
+                CommandExecutor(this.project).deleteModule(this.deleteModuleName.text),
+                "Console Output"
+            )
         }
     }
 }

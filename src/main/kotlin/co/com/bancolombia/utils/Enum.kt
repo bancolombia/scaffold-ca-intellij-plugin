@@ -21,11 +21,6 @@ enum class ServerOptions {
     JETTY
 }
 
-enum class GraphQLOptions {
-    PATH,
-    GRAPHQL
-}
-
 enum class EntryPoints {
     NONE,
     GENERIC,

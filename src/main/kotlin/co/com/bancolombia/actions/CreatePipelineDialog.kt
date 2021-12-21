@@ -7,6 +7,7 @@ import co.com.bancolombia.utils.PipelineOptions
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.ui.Messages
 import com.intellij.util.castSafelyTo
 import java.awt.Dimension
 import java.awt.GridBagLayout
@@ -34,7 +35,10 @@ class CreatePipelineDialog(private val project: Project) : DialogWrapper(true) {
         try {
             super.doOKAction()
         } finally {
-            OutputDialog(CommandExecutor(this.project).generatePipeline(options.name.toLowerCase())).show()
+            Messages.showInfoMessage(
+                CommandExecutor(this.project).generatePipeline(options.name.toLowerCase()),
+                "Console output"
+            )
         }
     }
 }

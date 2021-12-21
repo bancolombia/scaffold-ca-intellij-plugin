@@ -11,6 +11,7 @@ import co.com.bancolombia.utils.label
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.util.castSafelyTo
 import java.awt.Dimension
@@ -57,9 +58,10 @@ class CreateDriverAdaptersDialog(
         try {
             super.doOKAction()
         } finally {
-            OutputDialog(
-                CommandExecutor(this.project).generateDriverAdapter(type, options)
-            ).show()
+            Messages.showInfoMessage(
+                CommandExecutor(this.project).generateDriverAdapter(type, options),
+                "Console Output"
+            )
         }
     }
 
@@ -72,7 +74,7 @@ class CreateDriverAdaptersDialog(
             return ValidationInfo("Please enter a name", name)
         }
         if (selected == DriverAdapters.RESTCONSUMER && url.text.isNullOrEmpty()) {
-            return ValidationInfo("Please enter a name", url)
+            return ValidationInfo("Please enter a url", url)
         }
         return null
     }

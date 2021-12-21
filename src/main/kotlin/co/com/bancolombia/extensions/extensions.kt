@@ -12,6 +12,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
+import java.util.stream.Collectors
 import javax.swing.JComponent
 import javax.swing.JPanel
 
@@ -26,11 +27,9 @@ fun String.runCommand(project: Project): String{
         .redirectError(ProcessBuilder.Redirect.PIPE)
         .start()
     val reader = BufferedReader(InputStreamReader(process.inputStream))
-    val consoleOutput = StringBuilder("$this \n")
-    var line: String?
-    while (reader.readLine().also { line = it } != null) {
-        consoleOutput.append(line).append("\n")
-    }
+        .lines()
+        .collect(Collectors.joining("\n"))
+    val consoleOutput = StringBuilder("${this.soCommand()}\n$reader")
     try {
         if (!process.waitFor(30, TimeUnit.SECONDS)) {
             process.destroy()
@@ -39,7 +38,6 @@ fun String.runCommand(project: Project): String{
     }catch (e : InterruptedException){
         consoleOutput.append("the process was interrupted: $this \n cause: ${e.message}")
     }
-
     if (process.exitValue() != 0) {
         consoleOutput.append("execution failed with code ${process.exitValue()}: $this")
     }

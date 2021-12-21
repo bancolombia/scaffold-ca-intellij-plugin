@@ -9,6 +9,7 @@ import co.com.bancolombia.utils.ProjectType
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.util.castSafelyTo
 import java.awt.Dimension
@@ -48,7 +49,7 @@ class CreateStructureDialog(
         try {
             super.doOKAction()
         } finally {
-            OutputDialog(
+            Messages.showInfoMessage(
                 CommandExecutor(this.project).generateStructure(
                     mapOf(
                         "language" to language,
@@ -58,8 +59,9 @@ class CreateStructureDialog(
                         "coverage" to coverage,
                         "lombok" to lombok
                     )
-                )
-            ).show()
+                ),
+                "Console Output"
+            )
         }
     }
 

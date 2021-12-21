@@ -5,6 +5,7 @@ import co.com.bancolombia.extensions.initGridBag
 import co.com.bancolombia.utils.CommandExecutor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.ui.ValidationInfo
 import java.awt.Dimension
 import java.awt.GridBagLayout
@@ -39,7 +40,10 @@ class CreateHelperDialog(private val project: Project) : DialogWrapper(true) {
         try {
             super.doOKAction()
         } finally {
-            OutputDialog(CommandExecutor(this.project).generateHelper(this.helperName.text)).show()
+            Messages.showInfoMessage(
+                CommandExecutor(this.project).generateHelper(this.helperName.text),
+                "Console Output"
+            )
         }
     }
 }

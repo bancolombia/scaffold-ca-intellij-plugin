@@ -7,7 +7,6 @@ import com.intellij.util.ui.UIUtil
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
-import javax.swing.JComponent
 
  fun label(textLabel: String): JBLabel {
     val label = JBLabel(textLabel)
