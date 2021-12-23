@@ -41,7 +41,7 @@ class CreateHelperDialog(private val project: Project) : DialogWrapper(true) {
             super.doOKAction()
         } finally {
             Messages.showInfoMessage(
-                CommandExecutor(this.project).generateHelper(this.helperName.text),
+                CommandExecutor(this.project.basePath.toString()).generateHelper(this.helperName.text),
                 "Console Output"
             )
         }

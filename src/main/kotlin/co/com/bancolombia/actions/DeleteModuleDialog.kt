@@ -41,7 +41,7 @@ class DeleteModuleDialog(private val project: Project) : DialogWrapper(true) {
             super.doOKAction()
         } finally {
             Messages.showInfoMessage(
-                CommandExecutor(this.project).deleteModule(this.deleteModuleName.text),
+                CommandExecutor(this.project.basePath.toString()).deleteModule(this.deleteModuleName.text),
                 "Console Output"
             )
         }

@@ -14,6 +14,8 @@ plugins {
     id("org.jetbrains.changelog") version "1.3.1"
     // Gradle Qodana Plugin
     //id("org.jetbrains.qodana") version "0.1.13"
+    id("org.sonarqube") version "3.0" apply true
+    id("jacoco") apply true
 }
 
 group = properties("pluginGroup")
@@ -118,4 +120,35 @@ tasks {
     buildSearchableOptions {
         enabled = false
     }
+}
+
+sonarqube {
+    properties {
+        property("sonar.organization", "grupo-bancolombia")
+        property("sonar.projectKey", "bancolombia_scaffold-clean-architecture-plugin")
+        property("sonar.host.url", "https://sonarcloud.io/")
+
+        property("sonar.sources", ".")
+        property("sonar.java.binaries", "build/classes")
+        property("sonar.junit.reportPaths", "build/test-results/test")
+        property("sonar.java-coveragePlugin", "jacoco")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/report.xml")
+        property("sonar.test", "src/test/java")
+        property("sonar.exclusions", ".github/**,src/functionalTest/**,src/test/**/*Test.java,**/**models**,src/test/**/*Provider.java,**/**exceptions**,examples-ca/**")
+        property("sonar.sourceEncoding", "UTF-8")
+    }
+}
+
+tasks.withType<JacocoReport> {
+    reports {
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testImplementation("org.mockito:mockito-all:1.10.19")
 }

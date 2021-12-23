@@ -41,7 +41,7 @@ class CreateUseCaseDialog(private val project: Project) : DialogWrapper(true) {
             super.doOKAction()
         } finally {
             Messages.showInfoMessage(
-                CommandExecutor(this.project).generateUseCase(this.useCaseName.text),
+                CommandExecutor(this.project.basePath.toString()).generateUseCase(this.useCaseName.text),
                 "Console Output"
             )
         }

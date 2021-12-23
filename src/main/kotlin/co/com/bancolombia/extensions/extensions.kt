@@ -1,7 +1,6 @@
 package co.com.bancolombia.extensions
 
 import co.com.bancolombia.utils.label
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.SystemInfo
 import com.intellij.ui.components.JBLabel
 import com.intellij.uiDesigner.core.AbstractLayout
@@ -19,8 +18,8 @@ import javax.swing.JPanel
 
 fun String.soCommand() = if(SystemInfo.isWindows) "cmd /c gradlew.bat $this" else "./gradlew $this"
 
-fun String.runCommand(project: Project): String{
-    val workingDir = File(project.basePath.toString())
+fun String.runCommand(basePath: String): String{
+    val workingDir = File(basePath)
     val process = ProcessBuilder(*soCommand().split(" ").toTypedArray())
         .directory(workingDir)
         .redirectOutput(ProcessBuilder.Redirect.PIPE)

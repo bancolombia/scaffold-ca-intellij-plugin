@@ -59,7 +59,7 @@ class CreateEntryPointDialog(
             super.doOKAction()
         } finally {
             Messages.showInfoMessage(
-                CommandExecutor(this.project).generateEntryPoint(type, options),
+                CommandExecutor(this.project.basePath.toString()).generateEntryPoint(type, options),
                 "Console Output"
             )
         }

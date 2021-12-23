@@ -50,7 +50,7 @@ class CreateStructureDialog(
             super.doOKAction()
         } finally {
             Messages.showInfoMessage(
-                CommandExecutor(this.project).generateStructure(
+                CommandExecutor(this.project.basePath.toString()).generateStructure(
                     mapOf(
                         "language" to language,
                         "package" to packageName,

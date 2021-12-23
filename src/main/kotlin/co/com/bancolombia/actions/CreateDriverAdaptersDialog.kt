@@ -59,7 +59,7 @@ class CreateDriverAdaptersDialog(
             super.doOKAction()
         } finally {
             Messages.showInfoMessage(
-                CommandExecutor(this.project).generateDriverAdapter(type, options),
+                CommandExecutor(this.project.basePath.toString()).generateDriverAdapter(type, options),
                 "Console Output"
             )
         }

@@ -42,7 +42,7 @@ class CreateModelDialog(private val project: Project) : DialogWrapper(true) {
             super.doOKAction()
         } finally {
             Messages.showInfoMessage(
-                CommandExecutor(this.project).generateModel(this.useCaseName.text),
+                CommandExecutor(this.project.basePath.toString()).generateModel(this.useCaseName.text),
                 "Console Output"
             )
         }
