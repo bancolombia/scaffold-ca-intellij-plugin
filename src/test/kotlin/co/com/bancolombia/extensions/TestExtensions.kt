@@ -1,13 +1,7 @@
 package co.com.bancolombia.extensions
 
 import co.com.bancolombia.utils.label
-import com.intellij.mock.Mock
-import com.intellij.openapi.project.Project
-import com.intellij.openapi.project.ProjectManager
-import com.intellij.util.ui.GridBag
 import org.junit.Test
-import org.junit.jupiter.api.TestInstance
-import org.mockito.Mockito
 import javax.swing.JPanel
 import javax.swing.JTextField
 import kotlin.test.assertEquals
@@ -15,19 +9,12 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class TestExtensions {
 
     @Test
     fun `test join option in map collection should  returns a string`() {
         assertEquals("--name=NAME", mapOf("name" to "NAME").joinOptions())
 
-    }
-
-    @Test
-    fun `test soCommand should  returns a stringCommand linux`() {
-        System.setProperty("os.name", "linux")
-        assertEquals("./gradlew command", "command".soCommand())
     }
 
     @Test
@@ -63,7 +50,7 @@ class TestExtensions {
     fun `test add component to grid`() {
         val deleteModuleName = JTextField("moduleName")
         val jPanel = JPanel()
-        jPanel.addLine("Tets" ,deleteModuleName, initGridBag())
+        jPanel.addLine("Tets", deleteModuleName, initGridBag())
         assertTrue(jPanel.components.contains(deleteModuleName))
     }
 
@@ -71,11 +58,9 @@ class TestExtensions {
     fun `test add component to grid with label`() {
         val deleteModuleName = JTextField("moduleName")
         val jPanel = JPanel()
-        jPanel.addLine(label("Name") ,deleteModuleName, initGridBag())
+        jPanel.addLine(label("Name"), deleteModuleName, initGridBag())
         assertTrue(jPanel.components.contains(deleteModuleName))
     }
-
-
 
 
 }

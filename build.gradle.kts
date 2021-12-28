@@ -134,7 +134,10 @@ sonarqube {
         property("sonar.java-coveragePlugin", "jacoco")
         property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/report.xml")
         property("sonar.test", "src/test/java")
-        property("sonar.exclusions", ".github/**,src/functionalTest/**,src/test/**/*Test.java,**/**models**,src/test/**/*Provider.java,**/**exceptions**,examples-ca/**")
+        property(
+            "sonar.exclusions",
+            ".github/**,src/functionalTest/**,src/test/**/*Test.java,**/**models**,src/test/**/*Provider.java,**/**exceptions**,examples-ca/**"
+        )
         property("sonar.sourceEncoding", "UTF-8")
     }
 }
@@ -149,6 +152,6 @@ jacoco {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.mockito:mockito-all:1.10.19")
 }
