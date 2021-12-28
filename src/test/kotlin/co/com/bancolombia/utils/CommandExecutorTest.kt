@@ -1,5 +1,6 @@
 package co.com.bancolombia.utils
 
+import co.com.bancolombia.extensions.soCommand
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -11,7 +12,7 @@ import java.nio.file.Paths
 
 class CommandExecutorTest {
 
-    private val projectDir = File(System.getProperty("java.io.tmpdir"), "functionalTest")
+    private val projectDir = File("build", "functionalTest")
 
     @Test
     fun generateStructure() {
@@ -92,7 +93,7 @@ class CommandExecutorTest {
     fun generatePipeline() {
         CommandExecutor(projectDir.absolutePath).generatePipeline("azure")
         val path: Path =
-            Paths.get("deployment", "${PROJECT_NAME}_azure_build.yaml")
+            Paths.get("deployment", "${PROJECT_NAME.toLowerCase()}_azure_build.yaml")
         Assert.assertTrue(
             File(projectDir.absolutePath, path.toString())
                 .exists()
@@ -148,7 +149,7 @@ class CommandExecutorTest {
     fun initProject() {
         deleteDirectory(projectDir)
         Files.createDirectories(projectDir.toPath())
-        val process = Runtime.getRuntime().exec("cmd /c gradle wrapper", null, projectDir)
+        val process = Runtime.getRuntime().exec("init --type basic -p build/functionalTest".soCommand())
         process.waitFor()
         CommandExecutor(projectDir.absolutePath).generateStructure(
             mapOf(

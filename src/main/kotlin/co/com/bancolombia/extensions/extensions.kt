@@ -40,6 +40,7 @@ fun String.runCommand(basePath: String): String{
     if (process.exitValue() != 0) {
         consoleOutput.append("execution failed with code ${process.exitValue()}: $this")
     }
+    println(consoleOutput.toString())
     return consoleOutput.toString()
 }
 

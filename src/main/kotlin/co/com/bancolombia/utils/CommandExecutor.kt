@@ -11,7 +11,10 @@ class CommandExecutor(
 ) {
 
     fun generateStructure(options: Map<String, String>): String {
-        val out = "wrapper --gradle-version $GRADLE_VERSION --distribution-type all".runCommand(this.basePath)
+        var out = ""
+        if(" --version".runCommand(this.basePath).contains("Gradle [1-5]".toRegex())){
+            out = "wrapper --gradle-version $GRADLE_VERSION --distribution-type all".runCommand(this.basePath)
+        }
         writeBuildGradleFile(options["language"] ?: "JAVA")
         val command = "ca ${options.joinOptions()}"
         return "$out \n ${command.runCommand(this.basePath)}"
@@ -34,15 +37,18 @@ class CommandExecutor(
     fun deleteModule(name: String): String = "dm --module=$name".runCommand(this.basePath)
 
     private fun writeBuildGradleFile(language: String) {
-        var filename = BUILD_GRADLE
+        var buildFile = BUILD_GRADLE
+        var settingsFile = SETTINGS_GRADLE
         var content = JAVA_CONTENT
+        deleteGroovyGradleScripts(basePath)
         if (language == Language.KOTLIN.name) {
-            deleteGroovyGradleScripts(basePath)
-            filename += ".kts"
+            buildFile += ".kts"
+            settingsFile += "kts"
             content = KOTLIN_CONTENT
         }
 
-        val fileWriter = FileWriter("${basePath}/$filename")
+        val fileWriter = FileWriter("${basePath}/$buildFile")
+        FileWriter("${basePath}/$settingsFile")
         val printWriter = PrintWriter(fileWriter)
         printWriter.print(content)
         printWriter.close()
@@ -52,8 +58,8 @@ class CommandExecutor(
         const val GRADLE_VERSION = "6.9.1"
         const val BUILD_GRADLE = "build.gradle"
         const val SETTINGS_GRADLE = "settings.gradle"
-        const val KOTLIN_CONTENT = "plugins {\n\tid(\"co.com.bancolombia.cleanArchitecture\") version \"2.0.0\"\n}"
-        const val JAVA_CONTENT = "plugins {\n\tid 'co.com.bancolombia.cleanArchitecture' version '2.0.0'\n}"
+        const val KOTLIN_CONTENT = "plugins {\n\tid(\"co.com.bancolombia.cleanArchitecture\") version \"2.1.0\"\n}"
+        const val JAVA_CONTENT = "plugins {\n\tid 'co.com.bancolombia.cleanArchitecture' version '2.1.0'\n}"
     }
 
 }
