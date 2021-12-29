@@ -7,14 +7,9 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService
-                serviceImplementation="co.com.bancolombia.scaffoldcaintellijplugin.services.MyApplicationService"/>
-        <projectService serviceImplementation="co.com.bancolombia.scaffoldcaintellijplugin.services.MyProjectService"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="co.com.bancolombia.scaffoldcaintellijplugin.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
 
     <actions>

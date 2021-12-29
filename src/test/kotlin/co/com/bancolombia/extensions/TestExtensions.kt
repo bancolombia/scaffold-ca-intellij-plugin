@@ -19,7 +19,7 @@ class TestExtensions {
 
     @Test
     fun `test runCommand should  returns a string`() {
-        assertTrue("version".runCommand(".").isNotEmpty())
+        assertTrue(" --version".runCommand(".").isNotEmpty())
     }
 
     @Test
