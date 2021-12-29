@@ -125,7 +125,7 @@ tasks {
 sonarqube {
     properties {
         property("sonar.organization", "grupo-bancolombia")
-        property("sonar.projectKey", "bancolombia_scaffold-clean-architecture-plugin")
+        property("sonar.projectKey", "bancolombia_scafoldca-intellij-plugin")
         property("sonar.host.url", "https://sonarcloud.io/")
 
         property("sonar.sources", ".")
@@ -133,10 +133,10 @@ sonarqube {
         property("sonar.junit.reportPaths", "build/test-results/test")
         property("sonar.java-coveragePlugin", "jacoco")
         property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/report.xml")
-        property("sonar.test", "src/test/java")
+        property("sonar.test", "src/test/kotlin")
         property(
             "sonar.exclusions",
-            ".github/**,src/functionalTest/**,src/test/**/*Test.java,**/**models**,src/test/**/*Provider.java,**/**exceptions**,examples-ca/**"
+            ".github/**,src/main/kotlin/co/com/bancolombia/actions/**,src/test/**/*Test.kt"
         )
         property("sonar.sourceEncoding", "UTF-8")
     }
@@ -144,14 +144,13 @@ sonarqube {
 
 tasks.withType<JacocoReport> {
     reports {
+
     }
 }
 
-jacoco {
-    toolVersion = "0.8.7"
-}
 
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.mockito:mockito-all:1.10.19")
+    implementation("org.jacoco:org.jacoco.core:0.8.5")
 }

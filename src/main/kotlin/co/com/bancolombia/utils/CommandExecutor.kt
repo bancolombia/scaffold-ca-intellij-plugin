@@ -43,7 +43,7 @@ class CommandExecutor(
         deleteGroovyGradleScripts(basePath)
         if (language == Language.KOTLIN.name) {
             buildFile += ".kts"
-            settingsFile += "kts"
+            settingsFile += ".kts"
             content = KOTLIN_CONTENT
         }
 

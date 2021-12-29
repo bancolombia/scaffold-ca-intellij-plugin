@@ -9,7 +9,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-class TestExtensions {
+class ExtensionsTest {
 
     @Test
     fun `test join option in map collection should  returns a string`() {
