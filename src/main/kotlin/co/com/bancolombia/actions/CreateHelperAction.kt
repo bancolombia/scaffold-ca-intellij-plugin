@@ -1,5 +1,6 @@
 package co.com.bancolombia.actions
 
+import co.com.bancolombia.utils.CommandExecutor
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.roots.ProjectRootManager
@@ -12,19 +13,7 @@ import java.util.stream.Collectors
 class CreateHelperAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
-
-        val projectName: String = e.project!!.name
-
-
-        val vFiles = ProjectRootManager.getInstance(e.project!!).contentRootsFromAllModules
-        val sourceRootsList = Arrays.stream(vFiles).map { obj: VirtualFile -> obj.url }
-            .collect(Collectors.joining("\n"))
-        Messages.showInfoMessage(
-            "Source roots for the $projectName plugin:\n$sourceRootsList",
-            "Project Properties"
-        )
-
-        if (e.project == null) return
+        if (e.project == null || !CommandExecutor(e.project!!.basePath!!).validateProject()) return
         CreateHelperDialog(e.project!!).show()
     }
 }
