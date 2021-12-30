@@ -36,11 +36,11 @@ intellij {
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
 }
 
-// Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
+/*// Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
     version.set(properties("pluginVersion"))
     groups.set(emptyList())
-}
+}*/
 
 /*// Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
 qodana {
@@ -85,12 +85,12 @@ tasks {
             }.joinToString("\n").run { markdownToHTML(this) }
         )
 
-        // Get the latest available change notes from the changelog file
+/*        // Get the latest available change notes from the changelog file
         changeNotes.set(provider {
             changelog.run {
                 getOrNull(properties("pluginVersion")) ?: getLatest()
             }.toHTML()
-        })
+        })*/
     }
 
     // Configure UI tests plugin
