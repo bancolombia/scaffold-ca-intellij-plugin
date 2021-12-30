@@ -4,10 +4,10 @@ import co.com.bancolombia.utils.CommandExecutor
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 
-class CreateUseCaseAction : AnAction() {
+class CreateEntryPointAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         if (e.project == null || !CommandExecutor(e.project!!.basePath!!).validateProject()) return
-        CreateUseCaseDialog(e.project!!).show()
+        CreateEntryPointDialog(e.project!!).show()
     }
 }

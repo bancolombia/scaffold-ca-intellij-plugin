@@ -1,103 +1,89 @@
 package co.com.bancolombia.actions
 
-import co.com.bancolombia.extensions.runCommand
+import co.com.bancolombia.extensions.addLine
+import co.com.bancolombia.extensions.initGridBag
+import co.com.bancolombia.utils.CommandExecutor
 import co.com.bancolombia.utils.Language
 import co.com.bancolombia.utils.ProjectCoverage
 import co.com.bancolombia.utils.ProjectType
-import co.com.bancolombia.utils.label
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.ui.components.JBLabel
-import com.intellij.uiDesigner.core.AbstractLayout
-import com.intellij.util.ui.GridBag
-import com.intellij.util.ui.JBUI
-import com.intellij.util.ui.UIUtil
+import com.intellij.openapi.ui.Messages
+import com.intellij.openapi.ui.ValidationInfo
+import com.intellij.util.castSafelyTo
 import java.awt.Dimension
-import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
-import java.awt.Insets
-import java.io.FileWriter
-import java.io.PrintWriter
-import javax.swing.*
+import javax.swing.JCheckBox
+import javax.swing.JComponent
+import javax.swing.JPanel
+import javax.swing.JTextField
 
 
 class CreateStructureDialog(
-    private val project : Project
+    private val project: Project
 ) : DialogWrapper(true) {
 
     private val panel = JPanel(GridBagLayout())
     private val projectPackage = JTextField("co.com.bancolombia")
+    private val language: ComboBox<Language> = ComboBox(Language.values())
     private val projectName = JTextField("Default")
     private val projectType = ComboBox(ProjectType.values())
-    private val language = ComboBox(Language.values())
     private val projectCoverage = ComboBox(ProjectCoverage.values())
     private val lombok = JCheckBox("Lombok", true)
 
     init {
         init()
         title = "Generate Structure"
+        panel.preferredSize = Dimension(300, 250)
     }
-
-
 
     override fun doOKAction() {
-        val language = this.language.selectedItem.toString()
-        writeBuildGradleFile(language)
+        val language = this.language.selectedItem.castSafelyTo<Language>()?.name ?: "JAVA"
         val packageName = this.projectPackage.text
-        val type = this.projectType.selectedItem.toString()
+        val type = this.projectType.selectedItem.castSafelyTo<ProjectType>()?.name ?: "IMPERATIVE"
         val name = this.projectName.text
-        val coverage = projectCoverage.selectedItem.toString()
+        val coverage =
+            projectCoverage.selectedItem.castSafelyTo<ProjectCoverage>()?.name ?: "JACOCO"
         val lombok = this.lombok.isSelected.toString()
-        val command =
-            "ca --package=$packageName --type=$type --name=$name --coverage=$coverage --lombok=$lombok --language=$language"
-        command.runCommand(this.project)
-        super.doOKAction()
+        try {
+            super.doOKAction()
+        } finally {
+            Messages.showInfoMessage(
+                CommandExecutor(this.project.basePath.toString()).generateStructure(
+                    mapOf(
+                        "language" to language,
+                        "package" to packageName,
+                        "type" to type,
+                        "name" to name,
+                        "coverage" to coverage,
+                        "lombok" to lombok
+                    )
+                ),
+                "Console Output"
+            )
+        }
     }
 
-    private fun writeBuildGradleFile(language: String) {
-        var filename = "build.gradle"
+    override fun doValidate(): ValidationInfo? {
 
-        var code = """plugins {
-    id "co.com.bancolombia.cleanArchitecture" version "2.0.0"
-}""".trimIndent()
-
-        if (language == "KOTLIN") {
-            filename += ".kts"
-            code = """plugins {
-    id("co.com.bancolombia.cleanArchitecture") version "2.0.0"
-}""".trimIndent()
+        if (projectName.text.isNullOrEmpty()) {
+            return ValidationInfo("Please enter a name for project", projectName)
         }
-
-        val fileWriter = FileWriter("${project.basePath.toString()}/$filename")
-        val printWriter = PrintWriter(fileWriter)
-        printWriter.print(code)
-        printWriter.close()
+        if (projectPackage.text.isNullOrEmpty()) {
+            return ValidationInfo("Please enter a name for package", projectPackage)
+        }
+        return null
     }
 
     override fun createCenterPanel(): JComponent {
-        panel.preferredSize = Dimension(300, 250)
 
-        val gridBag = GridBag().setDefaultInsets(
-            Insets(
-                0,
-                0,
-                AbstractLayout.DEFAULT_VGAP,
-                AbstractLayout.DEFAULT_HGAP
-            )
-        ) .setDefaultWeightX(1.0).setDefaultFill(GridBagConstraints.HORIZONTAL)
-        panel.add(label("Name"), gridBag.nextLine().next().weightx(0.2))
-        panel.add(projectName, gridBag.next().weightx(0.8))
-        panel.add(label("Package"), gridBag.nextLine().next().weightx(0.2))
-        panel.add(projectPackage, gridBag.next().weightx(0.8))
-        panel.add(label("Type"), gridBag.nextLine().next().weightx(0.2))
-        panel.add(projectType, gridBag.next().weightx(0.8))
-        panel.add(label("Language"), gridBag.nextLine().next().weightx(0.2))
-        panel.add(language, gridBag.next().weightx(0.8))
-        panel.add(label("Coverage"), gridBag.nextLine().next().weightx(0.2))
-        panel.add(projectCoverage, gridBag.next().weightx(0.8))
-        panel.add(label(""), gridBag.nextLine().next().weightx(0.2))
-        panel.add(lombok, gridBag.next().weightx(0.8))
-        return panel
+        val gridBag = initGridBag()
+        return panel.addLine("Name", projectName, gridBag)
+            .addLine("Package", projectPackage, gridBag)
+            .addLine("Type", projectType, gridBag)
+            .addLine("Language", language, gridBag)
+            .addLine("Coverage", projectCoverage, gridBag)
+            .addLine("", lombok, gridBag)
     }
 }
