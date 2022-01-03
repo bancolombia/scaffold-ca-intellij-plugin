@@ -19,6 +19,8 @@ on:
     branches: [main]
   # Trigger the workflow on any pull request
   pull_request:
+    branches:
+      - master
 
 jobs:
 
@@ -72,6 +74,20 @@ jobs:
       # Run tests
       - name: Run Tests
         run: ./gradlew test
+        
+      - name: Execute jacocoTestReport
+        run: ./gradlew test jacocoTestReport
+      - name: copy the reportTest to codeCoverage
+        run: cp build/reports/jacoco/report.xml jacoco.xml || echo "Code coverage failed"
+      - name: Push codeCoverage to Codecov
+        run: bash <(curl -s https://codecov.io/bash)
+      - name: Run sonarqube
+        if: github.event.pull_request.head.repo.fork == false
+        run: ./gradlew sonarqube --stacktrace
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
       # Collect Tests Result of failed tests
       - name: Collect Tests Result
@@ -117,14 +133,6 @@ jobs:
         with:
           name: ${{ steps.artifact.outputs.filename }}
           path: ./build/distributions/content/*/*
-      - name: Execute jacocoTestReport
-        run: ./gradlew test jacocoTestReport
-      - name: Run sonarqube
-        if: github.event.pull_request.head.repo.fork == false
-        run: ./gradlew sonarqube --stacktrace
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # Prepare a draft release for GitHub Releases page for the manual verification
   # If accepted and published, release workflow would be triggered
