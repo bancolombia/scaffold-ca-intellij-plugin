@@ -15,7 +15,7 @@ plugins {
     // Gradle Qodana Plugin
     //id("org.jetbrains.qodana") version "0.1.13"
     id("org.sonarqube") version "3.0" apply true
-    id("jacoco") apply true
+    jacoco
 }
 
 group = properties("pluginGroup")
@@ -142,15 +142,26 @@ sonarqube {
     }
 }
 
-tasks.withType<JacocoReport> {
+// Do not generate reports for individual projects
+tasks.jacocoTestReport {
     reports {
-
+        xml.required.set(true)
+        html.required.set(true)
+        csv.required.set(false)
+        xml.outputLocation.set(file("${buildDir}/reports/jacoco/report.xml"))
     }
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) {
+                exclude("**/actions/**","**/utils/Enum.kt")
+            }
+        })
+    )
 }
 
 
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.mockito:mockito-all:1.10.19")
-    implementation("org.jacoco:org.jacoco.core:0.8.5")
+    implementation("org.jacoco:org.jacoco.core:0.8.7")
 }
