@@ -12,3 +12,6 @@
 - Definition task generate entry points
 - Definition task generate pipelines 
 - Definition task delete module
+
+## [1.0.2]
+- upload plugin to marketplace
