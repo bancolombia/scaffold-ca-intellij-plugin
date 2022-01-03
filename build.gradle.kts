@@ -125,7 +125,7 @@ tasks {
 sonarqube {
     properties {
         property("sonar.organization", "grupo-bancolombia")
-        property("sonar.projectKey", "bancolombia_scafoldca-intellij-plugin")
+        property("sonar.projectKey", "bancolombia_scaffold-ca-intellij-plugin")
         property("sonar.host.url", "https://sonarcloud.io/")
 
         property("sonar.sources", ".")
