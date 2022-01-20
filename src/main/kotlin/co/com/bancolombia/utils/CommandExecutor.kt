@@ -28,7 +28,7 @@ class CommandExecutor(
     fun generateEntryPoint(type: EntryPoints, options: Map<String, String>): String =
         "gep --type=${type.name.toLowerCase()} ${options.joinOptions()}".runCommand(this.basePath)
 
-    fun generateDriverAdapter(type: DriverAdapters, options: Map<String, String>): String =
+    fun generateDrivenAdapter(type: DrivenAdapters, options: Map<String, String>): String =
         "gda --type=${type.name.toLowerCase()} ${options.joinOptions()}".runCommand(this.basePath)
 
     fun generatePipeline(type: String): String = "gpl --type=$type".runCommand(this.basePath)
@@ -64,8 +64,8 @@ class CommandExecutor(
         const val GRADLE_VERSION = "7.3"
         const val BUILD_GRADLE = "build.gradle"
         const val SETTINGS_GRADLE = "settings.gradle"
-        const val KOTLIN_CONTENT = "plugins {\n\tid(\"co.com.bancolombia.cleanArchitecture\") version \"2.1.0\"\n}"
-        const val JAVA_CONTENT = "plugins {\n\tid 'co.com.bancolombia.cleanArchitecture' version '2.1.0'\n}"
+        const val KOTLIN_CONTENT = "plugins {\n\tid(\"co.com.bancolombia.cleanArchitecture\") version \"2.2.0\"\n}"
+        const val JAVA_CONTENT = "plugins {\n\tid 'co.com.bancolombia.cleanArchitecture' version '2.2.0'\n}"
     }
 
 }

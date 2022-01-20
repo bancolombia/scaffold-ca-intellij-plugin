@@ -21,7 +21,7 @@
             <action class="co.com.bancolombia.actions.CreateUseCaseAction" id="guc" text="Generate Use Case"/>
             <action class="co.com.bancolombia.actions.CreateModelAction" id="gm" text="Generate Model"/>
             <action class="co.com.bancolombia.actions.CreateEntryPointAction" id="gep" text="Generate Entry Points"/>
-            <action class="co.com.bancolombia.actions.CreateDriverAdaptersAction" id="gda" text="Generate Driver Adapters"/>
+            <action class="co.com.bancolombia.actions.CreateDrivenAdaptersAction" id="gda" text="Generate Driven Adapters"/>
             <action class="co.com.bancolombia.actions.CreateHelperAction" id="gh" text="Generate Helper"/>
             <action class="co.com.bancolombia.actions.DeleteModuleAction" id="dm" text="Delete Module"/>
             <action class="co.com.bancolombia.actions.CreatePipelineAction" id="gpl" text="Generate Pipeline"/>
