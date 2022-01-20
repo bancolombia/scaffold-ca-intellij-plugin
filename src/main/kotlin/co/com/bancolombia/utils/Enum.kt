@@ -32,7 +32,7 @@ enum class EntryPoints {
     MQ
 }
 
-enum class DriverAdapters {
+enum class DrivenAdapters {
     NONE,
     GENERIC,
     JPA,
@@ -45,7 +45,8 @@ enum class DriverAdapters {
     KMS,
     SECRETS,
     S3,
-    MQ
+    MQ,
+    KTOR
 }
 
 enum class ModeOptions {

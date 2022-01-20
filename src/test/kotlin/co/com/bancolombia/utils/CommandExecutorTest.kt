@@ -69,7 +69,7 @@ class CommandExecutorTest {
 
     @Test
     fun generateDriverAdapter() {
-        CommandExecutor(projectDir.absolutePath).generateDriverAdapter(DriverAdapters.GENERIC, mapOf("name" to "NAME"))
+        CommandExecutor(projectDir.absolutePath).generateDrivenAdapter(DrivenAdapters.GENERIC, mapOf("name" to "NAME"))
         val path: Path =
             Paths.get(
                 "infrastructure",

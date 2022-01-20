@@ -15,3 +15,6 @@
 
 ## [1.0.2]
 - upload plugin to marketplace
+
+## [1.0.3]
+- update gradle plugin CA version to 2.2.0
