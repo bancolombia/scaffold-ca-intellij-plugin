@@ -145,6 +145,12 @@ class CommandExecutorTest {
         )
     }
 
+    @Test
+    fun validateProject() {
+        val validate = CommandExecutor(projectDir.absolutePath).validateProject()
+        Assert.assertTrue(validate)
+    }
+
     @Before
     fun initProject() {
         deleteDirectory(projectDir)
