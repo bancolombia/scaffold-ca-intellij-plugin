@@ -89,12 +89,10 @@ class CreateDrivenAdaptersDialog(
             enableFields(selectedType)
         }
         mode.addActionListener {
-            val selectedMode = mode.selectedItem.castSafelyTo<ModeOptions>() ?: ModeOptions.TEMPLATE
-            options["mode"] = selectedMode.name.toLowerCase()
+            options["mode"] = (mode.selectedItem.castSafelyTo<ModeOptions>() ?: ModeOptions.TEMPLATE).name.toLowerCase()
         }
         secret.addActionListener {
-            val selectedType = secret.isSelected.toString()
-            options["secret"] = selectedType
+            options["secret"] = secret.isSelected.toString()
         }
 
         val gridBag = initGridBag()
