@@ -11,6 +11,9 @@
 
     <applicationListeners>
     </applicationListeners>
+    
+    <change-notes>
+    </change-notes>
 
     <actions>
         <!-- Add your actions here -->
