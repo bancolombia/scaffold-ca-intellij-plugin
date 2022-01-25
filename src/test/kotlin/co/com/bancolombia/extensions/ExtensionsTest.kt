@@ -50,7 +50,7 @@ class ExtensionsTest {
     fun `test add component to grid`() {
         val deleteModuleName = JTextField("moduleName")
         val jPanel = JPanel()
-        jPanel.addLine("Tets", deleteModuleName, initGridBag())
+        jPanel.addLine("test", deleteModuleName, initGridBag())
         assertTrue(jPanel.components.contains(deleteModuleName))
     }
 

@@ -1,16 +1,13 @@
 package co.com.bancolombia.utils
 
-import com.intellij.ui.components.JBLabel
 import com.intellij.util.ui.JBUI
-import com.intellij.util.ui.UIUtil
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
+import javax.swing.JLabel
 
-fun label(textLabel: String): JBLabel {
-    val label = JBLabel(textLabel)
-    label.componentStyle = UIUtil.ComponentStyle.SMALL
-    label.fontColor = UIUtil.FontColor.BRIGHTER
+fun label(textLabel: String): JLabel {
+    val label = JLabel(textLabel)
     label.border = JBUI.Borders.empty(0, 5, 2, 0)
     return label
 }

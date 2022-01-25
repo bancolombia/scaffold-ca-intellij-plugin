@@ -159,7 +159,6 @@ tasks.jacocoTestReport {
     )
 }
 
-
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.mockito:mockito-all:1.10.19")
