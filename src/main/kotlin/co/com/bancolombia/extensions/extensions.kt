@@ -2,7 +2,6 @@ package co.com.bancolombia.extensions
 
 import co.com.bancolombia.utils.label
 import com.intellij.openapi.util.SystemInfo
-import com.intellij.ui.components.JBLabel
 import com.intellij.uiDesigner.core.AbstractLayout
 import com.intellij.util.ui.GridBag
 import java.awt.GridBagConstraints
@@ -13,6 +12,7 @@ import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 import java.util.stream.Collectors
 import javax.swing.JComponent
+import javax.swing.JLabel
 import javax.swing.JPanel
 
 
@@ -70,7 +70,7 @@ fun JComponent.disabledComponent(){
     this.isVisible=false
 }
 
-fun JPanel.addLine(label : JBLabel, component:JComponent, grid:GridBag):JPanel{
+fun JPanel.addLine(label : JLabel, component:JComponent, grid:GridBag):JPanel{
     this.add(label, grid.customNextLine())
     this.add(component, grid.customTab())
     return this

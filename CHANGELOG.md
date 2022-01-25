@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- create project from template
 
 ## [1.0.1]
 - Begin build project
@@ -18,3 +19,6 @@
 
 ## [1.0.3]
 - update gradle plugin CA version to 2.2.0
+
+## [1.0.4]
+- change labels from UI
