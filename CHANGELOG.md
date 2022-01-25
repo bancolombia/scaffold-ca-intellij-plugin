@@ -1,7 +1,10 @@
 # Changelog
 
 ## [Unreleased]
-- create project from template
+
+## [1.0.4]
+## [1.0.4]
+- change labels from UI
 
 ## [1.0.1]
 - Begin build project
