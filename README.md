@@ -3,6 +3,7 @@
 ![Build](https://github.com/bancolombia/scaffold-ca-intellij-plugin/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/18314.svg)](https://plugins.jetbrains.com/plugin/18314)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/18314.svg)](https://plugins.jetbrains.com/plugin/18314)
+[![Scorecards supply-chain security](https://github.com/bancolombia/scaffold-ca-intellij-plugin/actions/workflows/scorecards-analysis.yml/badge.svg)](https://github.com/bancolombia/scaffold-ca-intellij-plugin/actions/workflows/scorecards-analysis.yml)
 
 ## Template ToDo list
 - [x] Create a new [IntelliJ Platform Plugin Template][template] project.
