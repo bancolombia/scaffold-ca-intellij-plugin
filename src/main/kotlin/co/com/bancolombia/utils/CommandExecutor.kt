@@ -64,8 +64,8 @@ class CommandExecutor(
         const val GRADLE_VERSION = "7.3"
         const val BUILD_GRADLE = "build.gradle"
         const val SETTINGS_GRADLE = "settings.gradle"
-        const val KOTLIN_CONTENT = "plugins {\n\tid(\"co.com.bancolombia.cleanArchitecture\") version \"2.2.0\"\n}"
-        const val JAVA_CONTENT = "plugins {\n\tid 'co.com.bancolombia.cleanArchitecture' version '2.2.0'\n}"
+        const val KOTLIN_CONTENT = "plugins {\n\tid(\"co.com.bancolombia.cleanArchitecture\") version \"2.2.3\"\n}"
+        const val JAVA_CONTENT = "plugins {\n\tid 'co.com.bancolombia.cleanArchitecture' version '2.2.3'\n}"
     }
 
 }

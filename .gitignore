@@ -316,3 +316,8 @@ gradle-app.setting
 .classpath
 
 # End of https://www.toptal.com/developers/gitignore/api/java,gradle,windows,linux,macos,intellij,visualstudiocode,eclipse,appbuilder
+*.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/modules/scaffold-ca-intellij-plugin.iml
+.idea/modules/scaffold-ca-intellij-plugin.iml
