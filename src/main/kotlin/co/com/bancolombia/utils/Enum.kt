@@ -46,7 +46,8 @@ enum class DrivenAdapters {
     SECRETS,
     S3,
     MQ,
-    KTOR
+    KTOR,
+    DYNAMODB
 }
 
 enum class ModeOptions {
