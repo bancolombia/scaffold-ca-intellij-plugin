@@ -36,7 +36,7 @@ class CreatePipelineDialog(private val project: Project) : DialogWrapper(true) {
             super.doOKAction()
         } finally {
             Messages.showInfoMessage(
-                CommandExecutor(this.project.basePath.toString()).generatePipeline(options.name.toLowerCase()),
+                CommandExecutor(this.project.basePath.toString()).generatePipeline(options.name.lowercase()),
                 "Console output"
             )
         }

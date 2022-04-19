@@ -26,10 +26,10 @@ class CommandExecutor(
     fun generateUseCase(name: String): String = "guc --name=$name".runCommand(this.basePath)
 
     fun generateEntryPoint(type: EntryPoints, options: Map<String, String>): String =
-        "gep --type=${type.name.toLowerCase()} ${options.joinOptions()}".runCommand(this.basePath)
+        "gep --type=${type.name.lowercase()} ${options.joinOptions()}".runCommand(this.basePath)
 
     fun generateDrivenAdapter(type: DrivenAdapters, options: Map<String, String>): String =
-        "gda --type=${type.name.toLowerCase()} ${options.joinOptions()}".runCommand(this.basePath)
+        "gda --type=${type.name.lowercase()} ${options.joinOptions()}".runCommand(this.basePath)
 
     fun generatePipeline(type: String): String = "gpl --type=$type".runCommand(this.basePath)
 

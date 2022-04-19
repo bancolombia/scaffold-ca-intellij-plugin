@@ -94,7 +94,7 @@ class CreateEntryPointDialog(
         server.addActionListener {
             val selectedServer =
                 server.selectedItem.castSafelyTo<ServerOptions>() ?: ServerOptions.UNDERTOW
-            options["server"] = selectedServer.name.toLowerCase()
+            options["server"] = selectedServer.name.lowercase()
         }
         return panel.addLine(label("Entry Point"), type, grid)
             .addLine(nameLabel, name, grid)
