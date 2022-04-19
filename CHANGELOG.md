@@ -22,3 +22,8 @@
 
 ## [1.0.4]
 - change labels from UI
+
+## [1.0.5]
+- fix [bug](https://github.com/bancolombia/scaffold-ca-intellij-plugin/issues/14)
+- update gradle plugin CA version to 2.2.4
+- add dynamo db option
