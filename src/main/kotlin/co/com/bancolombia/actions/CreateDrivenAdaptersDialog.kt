@@ -16,6 +16,7 @@ import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.util.castSafelyTo
 import java.awt.Dimension
 import java.awt.GridBagLayout
+import java.util.*
 import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JPanel
@@ -89,7 +90,7 @@ class CreateDrivenAdaptersDialog(
             enableFields(selectedType)
         }
         mode.addActionListener {
-            options["mode"] = (mode.selectedItem.castSafelyTo<ModeOptions>() ?: ModeOptions.TEMPLATE).name.toLowerCase()
+            options["mode"] = (mode.selectedItem.castSafelyTo<ModeOptions>() ?: ModeOptions.TEMPLATE).name.lowercase()
         }
         secret.addActionListener {
             options["secret"] = secret.isSelected.toString()
