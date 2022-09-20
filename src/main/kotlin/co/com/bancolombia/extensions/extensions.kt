@@ -16,7 +16,7 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 
 
-fun String.soCommand() = if(SystemInfo.isWindows) "cmd /c gradlew.bat $this" else "./gradlew $this"
+fun String.soCommand() = if(SystemInfo.isWindows) "cmd /c gradlew.bat ${this.trim()}" else "./gradlew ${this.trim()}"
 
 fun String.runCommand(basePath: String): String{
     val workingDir = File(basePath)
