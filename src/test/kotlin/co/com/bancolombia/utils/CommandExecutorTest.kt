@@ -93,7 +93,7 @@ class CommandExecutorTest {
     fun generatePipeline() {
         CommandExecutor(projectDir.absolutePath).generatePipeline("azure")
         val path: Path =
-            Paths.get("deployment", "${PROJECT_NAME.toLowerCase()}_azure_build.yaml")
+            Paths.get("deployment", "${PROJECT_NAME.toString()}_azure_build.yaml")
         Assert.assertTrue(
             File(projectDir.absolutePath, path.toString())
                 .exists()

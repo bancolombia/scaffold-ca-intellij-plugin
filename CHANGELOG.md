@@ -2,8 +2,11 @@
 
 ## [Unreleased]
 
-## [1.0.5]
-- create project from template
+## [1.0.6]
+- update version gradle plugin
+- update version jacoco
+- update version jupiter
+- update version plugin 
 
 ## [1.0.5]
 - fix [bug](https://github.com/bancolombia/scaffold-ca-intellij-plugin/issues/14)
