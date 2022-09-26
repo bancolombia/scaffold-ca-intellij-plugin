@@ -160,8 +160,8 @@ tasks.jacocoTestReport {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
     testImplementation("org.mockito:mockito-all:1.10.19")
-    implementation("org.jacoco:org.jacoco.core:0.8.7")
+    implementation("org.jacoco:org.jacoco.core:0.8.8")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.6.20")
 }
