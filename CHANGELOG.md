@@ -7,6 +7,7 @@
 - update version jacoco
 - update version jupiter
 - update version plugin 
+- fix bugs
 
 ## [1.0.5]
 - fix [bug](https://github.com/bancolombia/scaffold-ca-intellij-plugin/issues/14)

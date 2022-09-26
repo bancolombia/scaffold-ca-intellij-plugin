@@ -30,7 +30,7 @@ fun String.runCommand(basePath: String): String{
         .collect(Collectors.joining("\n"))
     val consoleOutput = StringBuilder("${this.soCommand()}\n$reader")
     try {
-        if (!process.waitFor(30, TimeUnit.SECONDS)) {
+        if (!process.waitFor(50, TimeUnit.SECONDS)) {
             process.destroy()
             consoleOutput.append("execution timed out: $this")
         }

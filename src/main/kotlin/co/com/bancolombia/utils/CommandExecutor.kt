@@ -61,7 +61,7 @@ class CommandExecutor(
     }
 
     companion object {
-        const val GRADLE_VERSION = "7.3"
+        const val GRADLE_VERSION = "7.5"
         const val BUILD_GRADLE = "build.gradle"
         const val SETTINGS_GRADLE = "settings.gradle"
         const val KOTLIN_CONTENT = "plugins {\n\tid(\"co.com.bancolombia.cleanArchitecture\") version \"2.2.4\"\n}"
