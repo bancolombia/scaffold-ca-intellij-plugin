@@ -46,6 +46,7 @@ class CreateStructureDialog(
         val coverage =
             projectCoverage.selectedItem.castSafelyTo<ProjectCoverage>()?.name ?: "JACOCO"
         val lombok = this.lombok.isSelected.toString()
+
         try {
             super.doOKAction()
         } finally {
