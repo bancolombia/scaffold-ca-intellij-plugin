@@ -14,7 +14,7 @@ class CommandExecutor(
     fun generateStructure(options: Map<String, String>): String {
 
         writeBuildGradleFile(options["language"] ?: "JAVA")
-        
+
         var out = ""
         if (" --version".runCommand(this.basePath).contains("Gradle [1-6]".toRegex())) {
             out = "wrapper --gradle-version $GRADLE_VERSION --distribution-type all".runCommand(this.basePath)
