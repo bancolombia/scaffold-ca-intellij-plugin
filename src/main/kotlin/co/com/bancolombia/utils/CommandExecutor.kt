@@ -11,14 +11,20 @@ class CommandExecutor(
     private val basePath: String
 ) {
 
-    fun generateStructure(options: Map<String, String>): String {
-
+    fun generateStructureFiles(options: Map<String, String>): String {
         writeBuildGradleFile(options["language"] ?: "JAVA")
 
-        var out = ""
-        if (" --version".runCommand(this.basePath).contains("Gradle [1-6]".toRegex())) {
+        return "Files Created."
+    }
+
+    fun generateStructure(options: Map<String, String>): String {
+
+       var out = ""
+        if (" --version".runCommand(this.basePath).contains("Gradle [1-8]".toRegex())) {
             out = "wrapper --gradle-version $GRADLE_VERSION --distribution-type all".runCommand(this.basePath)
         }
+
+        writeBuildGradleFile(options["language"] ?: "JAVA")
 
         val command = "ca ${options.joinOptions()}"
         return "$out \n ${command.runCommand(this.basePath)}"
