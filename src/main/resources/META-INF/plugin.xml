@@ -20,6 +20,7 @@
         <group id="scaffold-clean-architecture-menu" text="Scaffold Clean Architecture"
                description="Plugin clean architecture">
             <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="co.com.bancolombia.actions.CreateStructureFilesAction" id="cf" text="Generate Gradle/Files"/>
             <action class="co.com.bancolombia.actions.CreateStructureAction" id="ca" text="Generate Structure"/>
             <action class="co.com.bancolombia.actions.CreateUseCaseAction" id="guc" text="Generate Use Case"/>
             <action class="co.com.bancolombia.actions.CreateModelAction" id="gm" text="Generate Model"/>

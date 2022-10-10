@@ -7,7 +7,7 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.6.0"
+    kotlin("jvm") version "1.7.10"
     // Gradle IntelliJ Plugin
     id("org.jetbrains.intellij") version "1.5.2"
     // Gradle Changelog Plugin
@@ -16,6 +16,7 @@ plugins {
     //id("org.jetbrains.qodana") version "0.1.13"
     id("org.sonarqube") version "3.0" apply true
     jacoco
+
 }
 
 group = properties("pluginGroup")
@@ -164,4 +165,9 @@ dependencies {
     testImplementation("org.mockito:mockito-all:1.10.19")
     implementation("org.jacoco:org.jacoco.core:0.8.8")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.6.20")
+    implementation(kotlin("stdlib-jdk8"))
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "11"
 }
